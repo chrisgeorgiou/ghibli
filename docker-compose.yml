@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    ghibli_db_container:
+        image: postgres
+        container_name: ghibli_db
+
+    ghibli_container:
+        build: .
+        container_name: ghibli_web
+        restart: always
+        tty: true
+        #command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/srv/ghibli:delegated
+        ports:
+            - "8000:8000"
+        depends_on:
+            - ghibli_db
