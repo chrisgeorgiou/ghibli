@@ -1,0 +1,4 @@
+psycopg2
+django-environ
+urllib3
+pycodestyle

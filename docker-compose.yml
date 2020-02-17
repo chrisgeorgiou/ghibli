@@ -4,6 +4,15 @@ services:
     ghibli_db_container:
         image: postgres
         container_name: ghibli_db
+        working_dir: /ghibli
+        volumes:
+            - .:/ghibli
+        environment:
+            - POSTGRES_DB=ghibli_app_db
+            - POSTGRES_USER=ghibli_app_user
+            - POSTGRES_PASSWORD=password
+        ports:
+            - 8500:5432
 
     ghibli_container:
         build: .
@@ -12,8 +21,8 @@ services:
         tty: true
         #command: python manage.py runserver 0.0.0.0:8000
         volumes:
-            - .:/srv/ghibli:delegated
+            - .:/ghibli:delegated
         ports:
             - "8000:8000"
         depends_on:
-            - ghibli_db
+            - ghibli_db_container
